@@ -11,19 +11,19 @@ The Vue.js integration for ABP Boilerplate framework. This template is built on 
 
 ```sh
 cd vue
-yarn install 
+npm install 
 ```
 
 And then start
 
 ```
-yarn serve
+npm run serve
 ```
 
 ## Deployment
 
 ```sh
-yarn build
+npm run build
 ```
 
 ## Built With
