@@ -1,7 +1,7 @@
 <template>
 <div>
   <Card dis-hover>
-    <button @click="plus">Sayı Arttır : {{ sayi }}</button>
+    <Button @click="plus" type="primary">Sayı Arttır : {{ sayi }}</Button>
   </Card>
 </div>
 </template>
