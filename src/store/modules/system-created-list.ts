@@ -50,11 +50,6 @@ class SystemCreatedListModule extends ListModule<SystemCreatedListState, any, Sy
             //TODO:UĞUR url düzenle
             let reponse = await Ajax.get('/api/services/app/SystemCreatedList/Get?Id=' + payload.id);
             return reponse.data.result as SystemCreatedList;
-        },
-        async getSystemCreatedListItems(context: ActionContext<SystemCreatedListState, any>) {
-            //TODO:UĞUR url düzenle
-            let reponse = await Ajax.get('/api/services/app/SystemCreatedList/GetRoles');
-            context.state.systemCreatedListItems = reponse.data.result.items as SystemCreatedListItem[];
         }
     };
     mutations = {
