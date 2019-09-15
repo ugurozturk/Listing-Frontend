@@ -1,4 +1,4 @@
-import Entity from './entity'
+import Entity from './entity';
 
 export default class Tenant extends Entity<number>{
     tenancyName:string;
