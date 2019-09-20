@@ -18,21 +18,21 @@ class SystemCreatedListModule extends ListModule<SystemCreatedListState, any, Sy
     state = {
         totalCount: 0,
         currentPage: 1,
-        pageSize: 10,
+        pageSize: 100,
         list: new Array<SystemCreatedList>(),
         loading: false,
         editSystemCreatedList: new SystemCreatedList(),
-        systemCreatedListItems: new Array<SystemCreatedListItem>()
+        systemCreatedListItems: new PageResult<SystemCreatedListItem>()
     }
     actions = {
         async getAll(context: ActionContext<SystemCreatedListState, any>, payload: any) {
             context.state.loading = true;
             let reponse = await Ajax.get('/api/services/app/SystemCreatedList/GetAllWithItems', { params: payload.data });
-            console.log(`GetAllWithItems : ${JSON.stringify(reponse)}`);
+            // console.log(`GetAllWithItems : ${JSON.stringify(reponse)}`);
+            let page = reponse.data.result as Array<SystemCreatedList>;
+            context.state.list = page;
+            context.state.totalCount = page.reduce((a,b) => a + b.systemCreatedListItemCollection.totalCount, 0);
             context.state.loading = false;
-            let page = reponse.data.result as PageResult<SystemCreatedList>;
-            context.state.totalCount = page.totalCount;
-            context.state.list = page.items;
         },
         async create(context: ActionContext<SystemCreatedListState, any>, payload: any) {
             //TODO:UĞUR url düzenle
