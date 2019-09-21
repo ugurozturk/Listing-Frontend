@@ -63,7 +63,7 @@ export const appRouters: Array<Router> = [{
     icon: '&#xe68a;',
     component: main,
     children: [
-        { path: 'genelsystemCreatedList', meta: { title: 'SystemCreatedList' }, name: 'system-created-list', component: () => import('../views/system-created-list/system-created-list.vue') }
+        { path: 'Genel', meta: { title: 'Genel' }, name: 'system-created-list', component: () => import('../views/system-created-list/system-created-list.vue') }
     ]
 }]
 export const routers = [

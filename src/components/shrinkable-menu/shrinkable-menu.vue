@@ -50,7 +50,9 @@ export default class ShrinkableMenu extends Vue {
             }
         }
         if (willpush) {
-            this.$router.push({name:name})
+            this.$router.push({name:name}).catch(fa => {
+                console.log(fa);
+            });
         }
     }
 }
