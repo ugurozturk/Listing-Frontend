@@ -158,6 +158,9 @@
           // console.log(val)
         }
         beforePush (name:string) {
+          if (this.$router.currentRoute.name === name ){
+            return false;
+          }
           if (name === 'accesstest_index') {
             return false;
           } else {
