@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import {routers} from './router';
-import iView from 'iview';
+import iView, { LoadingBar } from 'iview';
 import Util from '../lib/util';
 import Cookies from 'js-cookie'
 import { appRouters,otherRouters} from './router'
@@ -16,7 +16,7 @@ const RouterConfig = {
 export const router = new VueRouter(RouterConfig);
 
 router.beforeEach((to, from, next) => {
-    iView.LoadingBar.start();
+   LoadingBar.start();
     Util.title(to.meta.title);
     if (Cookies.get('locking') === '1' && to.name !== 'locking') {
         next({
@@ -54,6 +54,6 @@ router.beforeEach((to, from, next) => {
 });
 router.afterEach((to) => {
     Util.openNewPage(router.app, to.name, to.params, to.query);
-    iView.LoadingBar.finish();
+    LoadingBar.finish();
     window.scrollTo(0, 0);
 });

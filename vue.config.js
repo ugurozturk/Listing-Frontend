@@ -1,5 +1,12 @@
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 module.exports = {
+    css: {
+        loaderOptions: {
+            less:{
+                javascriptEnabled: true
+            }
+        }
+    },
     configureWebpack: config => {
       if (process.env.NODE_ENV === 'production') {
         return {
