@@ -18,7 +18,7 @@ class SystemCreatedListModule extends ListModule<SystemCreatedListState, any, Sy
     state = {
         totalCount: 0,
         currentPage: 1,
-        pageSize: 100,
+        pageSize: 25,
         list: new Array<SystemCreatedList>(),
         loading: false,
         editSystemCreatedList: new SystemCreatedList(),
