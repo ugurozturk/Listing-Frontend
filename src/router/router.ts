@@ -42,7 +42,7 @@ export const otherRouters: Router = {
     children: [
         { path: 'home', meta: { title: 'HomePage' }, name: 'home', component: () => import('../views/home/home.vue') }
     ]
-}
+};
 export const appRouters: Array<Router> = [{
     path: '/setting',
     name: 'setting',
@@ -53,7 +53,17 @@ export const appRouters: Array<Router> = [{
     children: [
         { path: 'user', permission: 'Pages.Users', meta: { title: 'Users' }, name: 'user', component: () => import('../views/setting/user/user.vue') },
         { path: 'role', permission: 'Pages.Roles', meta: { title: 'Roles' }, name: 'role', component: () => import('../views/setting/role/role.vue') },
-        { path: 'tenant', permission: 'Pages.Tenants', meta: { title: 'Tenants' }, name: 'tenant', component: () => import('../views/setting/tenant/tenant.vue') }
+        { path: 'tenant', permission: 'Pages.Tenants', meta: { title: 'Tenants' }, name: 'tenant', component: () => import('../views/setting/tenant/tenant.vue') }        
+    ]
+}, {
+    path: '/Listing',
+    name: 'listing',
+    permission: '',
+    meta: { title: 'SystemCreatedLists' },
+    icon: '&#xe68a;',
+    component: main,
+    children: [
+        { path: 'genelsystemCreatedList', meta: { title: 'SystemCreatedList' }, name: 'system-created-list', component: () => import('../views/system-created-list/system-created-list.vue') }
     ]
 }]
 export const routers = [
