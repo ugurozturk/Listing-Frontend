@@ -26,7 +26,7 @@ import {
 import Util from '@/lib/util'
 import AbpBase from '@/lib/abpbase'
 import PageRequest from '@/store/entities/page-request'
-class PageSystemCreatedGameListRequest extends PageRequest {
+class PageSystemCreatedAnimeListRequest extends PageRequest {
   keyword: string;
   isActive: boolean = null; //nullable
   from: Date;
@@ -37,20 +37,20 @@ class PageSystemCreatedGameListRequest extends PageRequest {
 @Component({
 
 })
-export default class SystemCreatedGameLists extends AbpBase {
+export default class SystemCreatedAnimeLists extends AbpBase {
   edit() {
     this.editModalShow = true;
   }
   //filters
-  pagerequest: PageSystemCreatedGameListRequest = new PageSystemCreatedGameListRequest();
+  pagerequest: PageSystemCreatedAnimeListRequest = new PageSystemCreatedAnimeListRequest();
   creationTime: Date[] = [];
 
   createModalShow: boolean = false;
   editModalShow: boolean = false;
   get list() {
     let totalList = [];
-    this.$store.state.systemCreatedList.list.map(m=>{
-      totalList = totalList.concat(...m.systemCreatedListItemCollection.items)
+    this.$store.state.systemCreatedList.list.map(m=>  {
+     totalList =  totalList.concat(m.systemCreatedListItemCollection.items);
     });
     return totalList;
   };
@@ -82,7 +82,7 @@ export default class SystemCreatedGameLists extends AbpBase {
 
     this.pagerequest.maxResultCount = this.pageSize;
     this.pagerequest.skipCount = (this.currentPage - 1) * this.pageSize;
-    this.pagerequest.listTypeId = 1;
+    this.pagerequest.listTypeId = 2;
 
     await this.$store.dispatch({
       type: 'systemCreatedList/getAll',
