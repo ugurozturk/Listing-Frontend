@@ -64,7 +64,8 @@ export const appRouters: Array<Router> = [{
     component: main,
     children: [
         { path: 'genel', meta: { title: 'Genel' }, name: 'system-created-list', component: () => import('../views/system-created-list/system-created-list.vue') },
-        { path: 'games', meta: { title: 'Games' }, name: 'system-created-game-list', component: () => import('../views/system-created-list/games.vue') }
+        { path: 'games', meta: { title: 'Games' }, name: 'system-created-game-list', component: () => import('../views/system-created-list/games.vue') },
+        { path: 'animes', meta: { title: 'Animes' }, name: 'system-created-anime-list', component: () => import('../views/system-created-list/animes.vue') }
     ]
 }]
 export const routers = [
