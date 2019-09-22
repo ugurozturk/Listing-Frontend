@@ -93,7 +93,7 @@ export default class SystemCreatedGameLists extends AbpBase {
     return this.$store.state.systemCreatedList.pageSize;
   }
   get totalCount() {
-    return this.$store.state.systemCreatedList.totalCount;
+    return this.$store.state.systemCreatedList.totalItemsCount;
   }
   get currentPage() {
     return this.$store.state.systemCreatedList.currentPage;

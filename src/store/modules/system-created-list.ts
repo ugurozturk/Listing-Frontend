@@ -8,8 +8,9 @@ import SystemCreatedList from '../entities/system-created-list'
 import SystemCreatedListItem from '../entities/system-created-list-item'
 
 interface SystemCreatedListState extends ListState<SystemCreatedList> {
-    editSystemCreatedList: SystemCreatedList,
-    systemCreatedListItems: SystemCreatedListItem[]
+    editSystemCreatedList: SystemCreatedList;
+    systemCreatedListItems: SystemCreatedListItem[];
+    totalItemsCount: number;
 }
 class SystemCreatedListMutations extends ListMutations<SystemCreatedList>{
 
@@ -29,9 +30,10 @@ class SystemCreatedListModule extends ListModule<SystemCreatedListState, any, Sy
             context.state.loading = true;
             let reponse = await Ajax.get('/api/services/app/SystemCreatedList/GetAllWithItems', { params: payload.data });
             // console.log(`GetAllWithItems : ${JSON.stringify(reponse)}`);
-            let page = reponse.data.result as Array<SystemCreatedList>;
-            context.state.list = page;
-            context.state.totalCount = page.reduce((a,b) => a + b.systemCreatedListItemCollection.totalCount, 0);
+            let page = reponse.data.result as PageResult<SystemCreatedList>;
+            context.state.list = page.items;
+            context.state.totalCount = page.totalCount;
+            context.state.totalItemsCount = page.items ? page.items.reduce((a,b) => a + b.systemCreatedListItemCollection.totalCount, 0) : 0;
             context.state.loading = false;
         },
         async create(context: ActionContext<SystemCreatedListState, any>, payload: any) {

@@ -5,6 +5,11 @@
       <div class="margin-top-10">
        Toplam veri :  {{  totalCount }}
       </div>
+      <div class="margin-top-10">
+          <Table :loading="loading" :columns="columns" :no-data-text="L('NoDatas')" border :data="list">
+          </Table>
+          <Page show-sizer class-name="fengpage" :total="totalCount" class="margin-top-10" @on-change="pageChange" @on-page-size-change="pagesizeChange" :page-size="pageSize" :current="currentPage"></Page>
+      </div>
     </div>
   </Card>
 </div>
@@ -21,7 +26,7 @@ import {
 import Util from '@/lib/util'
 import AbpBase from '@/lib/abpbase'
 import PageRequest from '@/store/entities/page-request'
-class PageSystemCreatedListRequest extends PageRequest {
+class PageSystemCreatedGenelListRequest extends PageRequest {
   keyword: string;
   isActive: boolean = null; //nullable
   from: Date;
@@ -31,18 +36,26 @@ class PageSystemCreatedListRequest extends PageRequest {
 @Component({
 
 })
-export default class SystemCreatedLists extends AbpBase {
+export default class SystemCreatedGenelLists extends AbpBase {
   edit() {
     this.editModalShow = true;
   }
   //filters
-  pagerequest: PageSystemCreatedListRequest = new PageSystemCreatedListRequest();
+  pagerequest: PageSystemCreatedGenelListRequest = new PageSystemCreatedGenelListRequest();
   creationTime: Date[] = [];
 
   createModalShow: boolean = false;
   editModalShow: boolean = false;
   get list() {
-    return this.$store.state.SystemCreatedList.list;
+    let test = this.$store.state.systemCreatedList.list;
+    console.log(test);
+    return test;
+    // let totalList = [];
+    // this.$store.state.systemCreatedList.list.map(m=>  {
+    //  totalList =  totalList.concat(m);
+    // });
+    // console.log(totalList);
+    // return totalList;
   };
   get loading() {
     return this.$store.state.systemCreatedList.loading;
@@ -88,28 +101,44 @@ export default class SystemCreatedLists extends AbpBase {
     return this.$store.state.systemCreatedList.currentPage;
   }
   columns = [{
-    title: this.L('UserName'),
-    key: 'userName'
+    title: this.L('ID'),
+    key: 'id'
+  }, {
+    title: this.L('Type'),
+    key: 'listTypeName',
+    render: (h: any, params: any) => {
+      return h('span', params.row.listType.name);
+    }
   }, {
     title: this.L('Name'),
     key: 'name'
-  }, {
-    title: this.L('IsActive'),
+  },
+  {
+    title: this.L('ItemCount'),
+    key: 'systemCreatedListItemCollectionTotalCount',
     render: (h: any, params: any) => {
-      return h('span', params.row.isActive ? this.L('Yes') : this.L('No'))
+      return h('span', params.row.systemCreatedListItemCollection.totalCount);
     }
-  }, {
-    title: this.L('CreationTime'),
-    key: 'creationTime',
-    render: (h: any, params: any) => {
-      return h('span', new Date(params.row.creationTime).toLocaleDateString())
-    }
-  }, {
-    title: this.L('LastLoginTime'),
-    render: (h: any, params: any) => {
-      return h('span', new Date(params.row.lastLoginTime).toLocaleString())
-    }
-  }, {
+  },
+  
+  // {
+  //   title: this.L('IsActive'),
+  //   render: (h: any, params: any) => {
+  //     return h('span', params.row.isActive ? this.L('Yes') : this.L('No'))
+  //   }
+  // }, {
+  //   title: this.L('CreationTime'),
+  //   key: 'creationTime',
+  //   render: (h: any, params: any) => {
+  //     return h('span', new Date(params.row.creationTime).toLocaleDateString())
+  //   }
+  // }, {
+  //   title: this.L('LastLoginTime'),
+  //   render: (h: any, params: any) => {
+  //     return h('span', new Date(params.row.lastLoginTime).toLocaleString())
+  //   }
+  // }, 
+  {
     title: this.L('Actions'),
     key: 'Actions',
     width: 150,
