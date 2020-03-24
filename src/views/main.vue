@@ -126,6 +126,7 @@
           let messageCount = 3;
           this.messageCount = messageCount.toString();
           this.checkTag(this.$route.name);
+          this.$store.dispatch({type: 'listType/getAll'});
         }
         toggleClick () {
           this.shrink = !this.shrink;

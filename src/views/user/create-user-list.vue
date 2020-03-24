@@ -17,11 +17,11 @@
                             <Input v-model="userCreatedList.name" :maxlength="32"></Input>
                         </FormItem>
                     </TabPane>
-                    <!-- <TabPane :label="L('UserRoles')" name="roles">
-                        <CheckboxGroup v-model="user.roleNames">
-                            <Checkbox :label="role.normalizedName" v-for="role in roles" :key="role.id"><span>{{role.name}}</span></Checkbox>
-                        </CheckboxGroup>
-                    </TabPane>-->
+                    <TabPane :label="L('ListTypes')" name="listtypes">
+                        <RadioGroup v-model="userCreatedList.listTypeId">
+                            <Radio :label="listType.id" v-for="listType in listTypes" :key="listType.id"><span>{{listType.name}}</span></Radio>
+                        </RadioGroup >
+                    </TabPane>
                 </Tabs>
             </Form>
             <div slot="footer">
@@ -35,14 +35,14 @@
 import { Component, Vue, Inject, Prop, Watch } from "vue-property-decorator";
 import Util from "../../lib/util";
 import AbpBase from "../../lib/abpbase";
-import UserCreatedList from "../../store/entities/user-created-list";
+import {CreateUserCreatedList} from "../../store/entities/user-created-list";
 @Component
 export default class CreateUserList extends AbpBase {
     @Prop({ type: Boolean, default: false }) value: boolean;
-    userCreatedList: UserCreatedList = new UserCreatedList();
-    // get listTypes(){
-    //     return this.$store.state. .roles;
-    // }
+    userCreatedList: CreateUserCreatedList = new CreateUserCreatedList();
+    get listTypes(){
+        return this.$store.state.listType.list;
+    }
     save() {
         (this.$refs.userCreatedListForm as any).validate(
             async (valid: boolean) => {

@@ -10,3 +10,7 @@ export default class UserCreatedList extends Entity<number>{
     listType:ListType;
     userCreatedListItemCollection:PageResult<UserCreatedListItem>;
 }
+
+export class CreateUserCreatedList extends UserCreatedList{
+    listTypeId:number;
+}
