@@ -67,7 +67,18 @@ export const appRouters: Array<Router> = [{
         { path: 'games', meta: { title: 'Games' }, name: 'system-created-game-list', component: () => import('../views/system-created-list/games.vue') },
         { path: 'animes', meta: { title: 'Animes' }, name: 'system-created-anime-list', component: () => import('../views/system-created-list/animes.vue') }
     ]
-}]
+}, {
+    path: '/userListing',
+    name: 'userlisting',
+    permission: '',
+    meta: { title: 'UserCreatedLists' },
+    icon: '&#xe68a;',
+    component: main,
+    children: [
+        { path: 'organizeMyList', meta: { title: 'Organize My List' }, name: 'organize-my-list', component: () => import('../views/user/organize-my-list.vue') },
+    ]
+}
+]
 export const routers = [
     loginRouter,
     locking,
