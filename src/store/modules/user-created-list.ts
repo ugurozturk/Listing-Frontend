@@ -31,7 +31,6 @@ class UserCreatedListModule extends ListModule<UserCreatedListState, any, UserCr
             context.state.loading = false;
         },
         async create(context: ActionContext<UserCreatedListState, any>, payload: any) {
-            //TODO:UĞUR url düzenle
             await Ajax.post('/api/services/app/UserCreatedList/Create', payload.data);
         },
         async update(context: ActionContext<UserCreatedListState, any>, payload: any) {
@@ -39,7 +38,6 @@ class UserCreatedListModule extends ListModule<UserCreatedListState, any, UserCr
             await Ajax.put('/api/services/app/UserCreatedList/Update', payload.data);
         },
         async delete(context: ActionContext<UserCreatedListState, any>, payload: any) {
-            //TODO:UĞUR url düzenle
             await Ajax.delete('/api/services/app/UserCreatedList/Delete?Id=' + payload.data.id);
         },
         async get(context: ActionContext<UserCreatedListState, any>, payload: any) {

@@ -33,7 +33,7 @@
             </div>
         </Card>
         <create-user-list v-model="createModalShow" @save-success="getpage"></create-user-list>
-        <!-- <edit-user v-model="editModalShow" @save-success="getpage"></edit-user> -->
+        <edit-user-list v-model="editModalShow" @save-success="getpage"></edit-user-list>
     </div>
 </template>
 
@@ -49,6 +49,8 @@ import Util from '@/lib/util'
 import AbpBase from '@/lib/abpbase'
 import PageRequest from '@/store/entities/page-request'
 import CreateUserList from  './create-user-list.vue'
+import EditUserList from  './edit-user-list.vue'
+
 class PageUserCreatedListRequest extends PageRequest {
   keyword: string;
   isActive: boolean = null; //nullable
@@ -57,7 +59,7 @@ class PageUserCreatedListRequest extends PageRequest {
 }
 
 @Component({
-components:{CreateUserList}
+components:{CreateUserList, EditUserList}
 })
 export default class UserCreatedLists extends AbpBase {
   edit() {
@@ -177,7 +179,7 @@ export default class UserCreatedLists extends AbpBase {
           },
           on: {
             click: () => {
-              this.$store.commit('user/edit', params.row);
+              this.$store.commit('userCreatedList/edit', params.row);
               this.edit();
             }
           }
@@ -191,12 +193,12 @@ export default class UserCreatedLists extends AbpBase {
             click: async () => {
               this.$Modal.confirm({
                 title: this.L('Tips'),
-                content: this.L('DeleteUserConfirm'),
+                content: this.L('DeleteListConfirm'),
                 okText: this.L('Yes'),
                 cancelText: this.L('No'),
                 onOk: async () => {
                   await this.$store.dispatch({
-                    type: 'user/delete',
+                    type: 'userCreatedList/delete',
                     data: params.row
                   })
                   await this.getpage();

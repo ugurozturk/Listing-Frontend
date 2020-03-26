@@ -14,3 +14,7 @@ export default class UserCreatedList extends Entity<number>{
 export class CreateUserCreatedList extends UserCreatedList{
     listTypeId:number;
 }
+
+export class EditUserCreatedList extends UserCreatedList{
+    listTypeId:number;
+}
