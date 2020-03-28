@@ -77,6 +77,7 @@
     import lockScreen from '../components/lockscreen/lockscreen.vue';
     import notice from '../components/notices/notice.vue';
     import util from '../lib/util';
+    import * as _ from "lodash";
     import copyfooter from '../components/Footer.vue'
     import LanguageList from '../components/language-list.vue'
     import AbpBase from '../lib/abpbase'
@@ -94,7 +95,22 @@
           return this.$store.state.app.openedSubmenuArr
         }
         get menuList () {
-          return this.$store.state.app.menuList;
+          var menuList = _.cloneDeep(this.$store.state.app.menuList);
+          var dinamikEklenenler = this.$store.state.userCreatedList.list;
+          dinamikEklenenler.forEach(element => {
+            let router : Router = {
+              path: '/mylist-'+ element.name,
+              name: 'mylistname' + element.name,
+              meta: {
+                  title: element.name,
+                  ekdeger: 'Benim Liste Kodum'
+              },
+              component: () => import('../views/user-list/my-list.vue')
+            }
+            let eklenecekMenu = menuList.filter(f => f.name === 'userlisting')[0];
+            eklenecekMenu.children.push(router);
+          });
+          return menuList;
         }
         get pageTagsList () {
           return this.$store.state.app.pageOpenedList as Array<any>;
@@ -127,6 +143,7 @@
           this.messageCount = messageCount.toString();
           this.checkTag(this.$route.name);
           this.$store.dispatch({type: 'listType/getAll'});
+          this.$store.dispatch({type: 'userCreatedList/getAll'})
         }
         toggleClick () {
           this.shrink = !this.shrink;

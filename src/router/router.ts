@@ -1,6 +1,7 @@
 declare global {
     interface RouterMeta {
         title: string;
+        ekdeger?: any;
     }
     interface Router {
         path: string;
@@ -75,7 +76,7 @@ export const appRouters: Array<Router> = [{
     icon: '&#xe68a;',
     component: main,
     children: [
-        { path: 'organizeMyList', meta: { title: 'Organize My List' }, name: 'organize-my-list', component: () => import('../views/user/organize-my-list.vue') },
+        { path: 'organizeMyList', meta: { title: 'Organize My List' }, name: 'organize-my-list', component: () => import('../views/user-list/organize-my-list.vue') },
     ]
 }
 ]

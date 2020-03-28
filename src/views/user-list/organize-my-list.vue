@@ -72,15 +72,7 @@ export default class UserCreatedLists extends AbpBase {
   createModalShow: boolean = false;
   editModalShow: boolean = false;
   get list() {
-    let test = this.$store.state.userCreatedList.list;
-    console.log(test);
-    return test;
-    // let totalList = [];
-    // this.$store.state.systemCreatedList.list.map(m=>  {
-    //  totalList =  totalList.concat(m);
-    // });
-    // console.log(totalList);
-    // return totalList;
+    return this.$store.state.userCreatedList.list;
   };
   get loading() {
     return this.$store.state.userCreatedList.loading;
