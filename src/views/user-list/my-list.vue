@@ -32,8 +32,8 @@
                 </div>
             </div>
         </Card>
-        <create-user-list v-model="createModalShow" @save-success="getpage"></create-user-list>
-        <edit-user-list v-model="editModalShow" @save-success="getpage"></edit-user-list>
+        <!-- <create-user-list v-model="createModalShow" @save-success="getpage"></create-user-list>
+        <edit-user-list v-model="editModalShow" @save-success="getpage"></edit-user-list> -->
     </div>
 </template>
 
@@ -72,10 +72,10 @@ export default class UserListView extends AbpBase {
   createModalShow: boolean = false;
   editModalShow: boolean = false;
   get list() {
-    return this.$store.state.userListView.list;
+    return this.$store.state.userCreatedList.list;
   };
   get loading() {
-    return this.$store.state.userListView.loading;
+    return this.$store.state.userCreatedList.loading;
   }
   create() {
     this.createModalShow = true;
@@ -104,18 +104,18 @@ export default class UserListView extends AbpBase {
     this.pagerequest.skipCount = (this.currentPage - 1) * this.pageSize;
 
     await this.$store.dispatch({
-      type: 'userListView/getAll',
+      type: 'userCreatedList/getAll',
       data: this.pagerequest
     })
   }
   get pageSize() {
-    return this.$store.state.userListView.pageSize;
+    return this.$store.state.userCreatedList.pageSize;
   }
   get totalCount() {
-    return this.$store.state.userListView.totalCount;
+    return this.$store.state.userCreatedList.totalCount;
   }
   get currentPage() {
-    return this.$store.state.userListView.currentPage;
+    return this.$store.state.userCreatedList.currentPage;
   }
   columns = [{
     title: this.L('ID'),
@@ -132,9 +132,9 @@ export default class UserListView extends AbpBase {
   },
   {
     title: this.L('ItemCount'),
-    key: 'userListViewItemCollectionTotalCount',
+    key: 'userCreatedListItemCollectionTotalCount',
     render: (h: any, params: any) => {
-      return h('span', params.row.userListViewItemCollection?.totalCount ?? 0);
+      return h('span', params.row.userCreatedListItemCollection?.totalCount ?? 0);
     }
   },
   
@@ -171,7 +171,7 @@ export default class UserListView extends AbpBase {
           },
           on: {
             click: () => {
-              this.$store.commit('userListView/edit', params.row);
+              this.$store.commit('userCreatedList/edit', params.row);
               this.edit();
             }
           }
@@ -190,7 +190,7 @@ export default class UserListView extends AbpBase {
                 cancelText: this.L('No'),
                 onOk: async () => {
                   await this.$store.dispatch({
-                    type: 'userListView/delete',
+                    type: 'userCreatedList/delete',
                     data: params.row
                   })
                   await this.getpage();

@@ -1,6 +1,8 @@
 <template>
     <ButtonGroup>
-        <Button v-for="l in list" :key="l.id" @click="linkTo(l)">{{l.name}}</Button>
+        <router-link :to="'/mylist/' + l.name" v-for="l in list" :key="l.id">
+            <Button>{{l.name}}</Button>
+        </router-link>
     </ButtonGroup>
 </template>
 <script lang="ts">
@@ -10,19 +12,5 @@ import AbpBase from "../lib/abpbase";
 @Component
 export default class UserListTop extends AbpBase {
     @Prop() list: Array<any>;
-
-    linkTo (item:any) {
-        console.log(item);
-        let routerObj:any = {};
-        routerObj.name = 'mylist';
-        if (item.argu) {
-            routerObj.params = { listName : item.name };
-        }
-        if (item.query) {
-            routerObj.query = item.query;
-        }
-
-        this.$router.push(routerObj);
-    }
 }
 </script>
