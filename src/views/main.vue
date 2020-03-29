@@ -34,6 +34,7 @@
                 </div>
                 <div class="header-avator-con">
                     <full-screen v-model="isFullScreen" @on-change="fullscreenChange"></full-screen>
+                    <user-list-top :list="userList"></user-list-top>
                     <lock-screen></lock-screen>  
                     <notice></notice>   
                     <language-list></language-list>         
@@ -80,9 +81,10 @@
     import * as _ from "lodash";
     import copyfooter from '../components/Footer.vue'
     import LanguageList from '../components/language-list.vue'
+    import UserListTop from '../components/user-list-top.vue'
     import AbpBase from '../lib/abpbase'
     @Component({
-      components:{shrinkableMenu,tagsPageOpened,breadcrumbNav,fullScreen,lockScreen,notice,copyfooter,LanguageList}
+      components:{shrinkableMenu,tagsPageOpened,breadcrumbNav,fullScreen,lockScreen,notice,copyfooter,LanguageList, UserListTop}
     })
     export default class Main extends AbpBase {
         shrink:boolean=false;
@@ -95,22 +97,7 @@
           return this.$store.state.app.openedSubmenuArr
         }
         get menuList () {
-          var menuList = _.cloneDeep(this.$store.state.app.menuList);
-          var dinamikEklenenler = this.$store.state.userCreatedList.list;
-          dinamikEklenenler.forEach(element => {
-            let router : Router = {
-              path: '/mylist-'+ element.name,
-              name: 'mylistname' + element.name,
-              meta: {
-                  title: element.name,
-                  ekdeger: 'Benim Liste Kodum'
-              },
-              component: () => import('../views/user-list/my-list.vue')
-            }
-            let eklenecekMenu = menuList.filter(f => f.name === 'userlisting')[0];
-            eklenecekMenu.children.push(router);
-          });
-          return menuList;
+          return this.$store.state.app.menuList;
         }
         get pageTagsList () {
           return this.$store.state.app.pageOpenedList as Array<any>;
@@ -132,6 +119,9 @@
         }
         get mesCount () {
           return this.$store.state.app.messageCount;
+        }
+        get userList () {
+          return this.$store.state.userCreatedList.list;
         }
         init () {
           let pathArr = util.setCurrentPath(this, this.$route.name as string);

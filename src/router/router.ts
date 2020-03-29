@@ -34,6 +34,7 @@ export const loginRouter: Router = {
     },
     component: () => import('../views/login.vue')
 };
+
 export const otherRouters: Router = {
     path: '/main',
     name: 'main',
@@ -41,7 +42,8 @@ export const otherRouters: Router = {
     meta: { title: 'ManageMenu' },
     component: main,
     children: [
-        { path: 'home', meta: { title: 'HomePage' }, name: 'home', component: () => import('../views/home/home.vue') }
+        { path: 'home', meta: { title: 'HomePage' }, name: 'home', component: () => import('../views/home/home.vue') },
+        { path: '/myList', meta: { title: 'UserList' }, name: 'mylist',  component: () => import('../views/user-list/my-list.vue') }
     ]
 };
 export const appRouters: Array<Router> = [{
