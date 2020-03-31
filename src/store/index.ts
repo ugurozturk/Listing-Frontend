@@ -10,6 +10,7 @@ import tenant from './modules/tenant'
 import listType from './modules/list-type'
 import systemCreatedList from './modules/system-created-list'
 import userCreatedList from './modules/user-created-list'
+import userCreatedListItem from './modules/user-created-list-item'
 const store = new Vuex.Store({
     state: {
         //
@@ -29,7 +30,8 @@ const store = new Vuex.Store({
         tenant,
         listType,
         systemCreatedList,
-        userCreatedList
+        userCreatedList,
+        userCreatedListItem
     }
 });
 

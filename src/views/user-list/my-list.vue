@@ -56,27 +56,30 @@ class PageUserListViewRequest extends PageRequest {
   isActive: boolean = null; //nullable
   from: Date;
   to: Date;
+  userCreatedListId: number;
 }
 
 @Component({
 // components:{CreateUserList, EditUserList}
 })
 export default class UserListView extends AbpBase {
+  @Prop({type:Number}) listid:Number;
   edit() {
     this.editModalShow = true;
   }
   //filters
   pagerequest: PageUserListViewRequest = new PageUserListViewRequest();
   //creationTime: Date;
-
+  
   createModalShow: boolean = false;
   editModalShow: boolean = false;
   get list() {
-    return this.$store.state.userCreatedList.list;
+    return this.$store.state.userCreatedListItem.list;
   };
   get loading() {
-    return this.$store.state.userCreatedList.loading;
+    return this.$store.state.userCreatedListItem.loading;
   }
+  @Watch('$route') reloadPage(to:any){ this.getpage(); }
   create() {
     this.createModalShow = true;
   }
@@ -102,9 +105,11 @@ export default class UserListView extends AbpBase {
 
     this.pagerequest.maxResultCount = this.pageSize;
     this.pagerequest.skipCount = (this.currentPage - 1) * this.pageSize;
+    
+    this.pagerequest.userCreatedListId = Number(this.$route.params.id);
 
     await this.$store.dispatch({
-      type: 'userCreatedList/getAll',
+      type: 'userCreatedListItem/getAll',
       data: this.pagerequest
     })
   }
@@ -121,20 +126,19 @@ export default class UserListView extends AbpBase {
     title: this.L('ID'),
     key: 'id'
   }, {
-    title: this.L('Type'),
-    key: 'listTypeName',
-    render: (h: any, params: any) => {
-      return h('span', params.row.listType.name);
-    }
-  }, {
     title: this.L('Name'),
     key: 'name'
-  },
-  {
-    title: this.L('ItemCount'),
-    key: 'userCreatedListItemCollectionTotalCount',
+  }, {
+    title: this.L('SystemCreatedListItem'),
+    key: 'systemCreatedListItem',
     render: (h: any, params: any) => {
-      return h('span', params.row.userCreatedListItemCollection?.totalCount ?? 0);
+      return h('span', params.row.systemCreatedListItem.name);
+    }
+  }, {
+    title: this.L('UserCreatedListType'),
+    key: 'userCreatedListType',
+    render: (h: any, params: any) => {
+      return h('span', params.row.userCreatedList.listType.name);
     }
   },
   

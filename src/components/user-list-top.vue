@@ -1,6 +1,6 @@
 <template>
     <ButtonGroup>
-        <router-link :to="'/mylist/' + l.name" v-for="l in list" :key="l.id">
+        <router-link :to="{path: '/mylist/' + l.name + '/' + l.id}" v-for="l in list" :key="l.id">
             <Button>{{l.name}}</Button>
         </router-link>
     </ButtonGroup>
