@@ -34,6 +34,7 @@
         </Card>
         <!-- <create-user-list v-model="createModalShow" @save-success="getpage"></create-user-list>
         <edit-user-list v-model="editModalShow" @save-success="getpage"></edit-user-list> -->
+        <create-user-list-item v-model="createUserListItemShown"></create-user-list-item>
     </div>
 </template>
 
@@ -50,6 +51,7 @@ import AbpBase from '@/lib/abpbase'
 import PageRequest from '@/store/entities/page-request'
 // import CreateUserList from  './create-user-list.vue'
 // import EditUserList from  './edit-user-list.vue'
+import CreateUserListItem from '../../components/user-list/create-user-list-item.vue'
 
 class PageUserListViewRequest extends PageRequest {
   keyword: string;
@@ -60,19 +62,16 @@ class PageUserListViewRequest extends PageRequest {
 }
 
 @Component({
-// components:{CreateUserList, EditUserList}
+ components:{CreateUserListItem}
 })
 export default class UserListView extends AbpBase {
   @Prop({type:Number}) listid:Number;
-  edit() {
-    this.editModalShow = true;
-  }
-  //filters
   pagerequest: PageUserListViewRequest = new PageUserListViewRequest();
+  createUserListItemShown: boolean = false;
+
+  //filters
   //creationTime: Date;
   
-  createModalShow: boolean = false;
-  editModalShow: boolean = false;
   get list() {
     return this.$store.state.userCreatedListItem.list;
   };
@@ -81,7 +80,7 @@ export default class UserListView extends AbpBase {
   }
   @Watch('$route') reloadPage(to:any){ this.getpage(); }
   create() {
-    this.createModalShow = true;
+    this.createUserListItemShown = true;
   }
   isActiveChange(val: string) {
     console.log(val);
@@ -176,7 +175,7 @@ export default class UserListView extends AbpBase {
           on: {
             click: () => {
               this.$store.commit('userCreatedList/edit', params.row);
-              this.edit();
+              // this.edit();
             }
           }
         }, this.L('Edit')),
