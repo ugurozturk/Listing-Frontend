@@ -45,10 +45,8 @@ import { Component, Vue, Inject, Prop, Watch } from "vue-property-decorator";
 import Util from "../../lib/util";
 import AbpBase from "../../lib/abpbase";
 import UserCreatedListItem from "../../store/entities/user-created-list-item";
-import Multiselect from 'vue-multiselect';
-@Component({
-components:{Multiselect}
-})
+
+@Component
 export default class CreateUserListItem extends AbpBase {
     @Prop({ type: Boolean, default: false }) value: boolean;
     userCreatedListItem: UserCreatedListItem = new UserCreatedListItem();
@@ -67,7 +65,7 @@ export default class CreateUserListItem extends AbpBase {
         name: newTag,
         code: newTag.substring(0, 2) + Math.floor((Math.random() * 10000000))
       }
-      this.userCreatedListItem.userCreatedListItemTags.push(tag)
+      this.testMultiSelectTags.push(tag);
     }
 
     save() {
