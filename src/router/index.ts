@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import {routers} from './router';
-import iView, { LoadingBar } from 'iview';
+import ViewUI, { LoadingBar } from 'view-design';
 import Util from '../lib/util';
 import Cookies from 'js-cookie'
 import { appRouters,otherRouters} from './router'
