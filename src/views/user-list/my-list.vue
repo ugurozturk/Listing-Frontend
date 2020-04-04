@@ -34,7 +34,7 @@
         </Card>
         <!-- <create-user-list v-model="createModalShow" @save-success="getpage"></create-user-list>
         <edit-user-list v-model="editModalShow" @save-success="getpage"></edit-user-list> -->
-        <create-user-list-item v-model="createUserListItemShown"></create-user-list-item>
+        <create-user-list-item v-model="createUserListItemShown" :listid="listid"></create-user-list-item>
     </div>
 </template>
 
@@ -65,7 +65,6 @@ class PageUserListViewRequest extends PageRequest {
  components:{CreateUserListItem}
 })
 export default class UserListView extends AbpBase {
-  @Prop({type:Number}) listid:Number;
   pagerequest: PageUserListViewRequest = new PageUserListViewRequest();
   createUserListItemShown: boolean = false;
 
@@ -105,12 +104,15 @@ export default class UserListView extends AbpBase {
     this.pagerequest.maxResultCount = this.pageSize;
     this.pagerequest.skipCount = (this.currentPage - 1) * this.pageSize;
     
-    this.pagerequest.userCreatedListId = Number(this.$route.params.id);
+    this.pagerequest.userCreatedListId = this.listid;
 
     await this.$store.dispatch({
       type: 'userCreatedListItem/getAll',
       data: this.pagerequest
     })
+  }
+  get listid(){
+    return Number(this.$route.params.id);
   }
   get pageSize() {
     return this.$store.state.userCreatedList.pageSize;

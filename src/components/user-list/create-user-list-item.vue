@@ -18,17 +18,14 @@
                         <FormItem :label="L('Name')" prop="name">
                             <Input v-model="userCreatedListItem.name" :maxlength="32"></Input>
                         </FormItem>
-                        <FormItem :label="L('Score')" prop="name">
+                        <FormItem :label="L('Score')" prop="score">
                             <Input v-model="userCreatedListItem.score" :maxlength="32"></Input>
                         </FormItem>
-                        <FormItem :label="L('Tags')" prop="name">
-                            <Select v-model="userCreatedListItem.userCreatedListItemTags" placeholder="Tag arayın yada ekleyin" allow-create @on-create="userItemTagEkle" filterable multiple>
-                                <Option v-for="item in testMultiSelectTags" :value="item.code" :key="item.code">{{ item.name }}</Option>
+                        <FormItem :label="L('Tags')" prop="userCreatedListItemTags">
+                            <Select v-model="userCreatedListItem.userCreatedListItemTags" placeholder="Tag arayın yada ekleyin" allow-create @on-create="userItemTagEkle" filterable multiple transfer>
+                                <Option v-for="item in currentListTags" :value="item.id" :key="item.id">{{ item.name }}</Option>
                             </Select>
                             <!-- <multiselect v-model="userCreatedListItem.userCreatedListItemTags" tag-placeholder="tag gibi ekle" placeholder="Ara yada yeni tag ekle" label="name" track-by="code" :options="userCreatedListItem.userCreatedListItemTags" :multiple="true" :taggable="true" @tag="addTag"></multiselect> -->
-                        </FormItem>
-                        <FormItem :label="L('Score')" prop="name">
-                            <Input :maxlength="32"></Input>
                         </FormItem>
                     </TabPane>
                 </Tabs>
@@ -43,29 +40,49 @@
 <script lang="ts">
 import { Component, Vue, Inject, Prop, Watch } from "vue-property-decorator";
 import Util from "../../lib/util";
+import * as _ from "lodash";
 import AbpBase from "../../lib/abpbase";
+import PageRequest from '@/store/entities/page-request';
 import UserCreatedListItem from "../../store/entities/user-created-list-item";
+
+class PageUserCreatedListItemTagRequest extends PageRequest {
+  keyword: string;
+  isActive: boolean = null; //nullable
+  from: Date;
+  to: Date;
+  Name: string;
+  UserCreatedListId: Number;
+  UserCreatedListItemId: Number;
+}
+
+class CreateUserCreatedListItemTag {
+  Name: String;
+  UserCreatedListItemId: Number
+}
 
 @Component
 export default class CreateUserListItem extends AbpBase {
     @Prop({ type: Boolean, default: false }) value: boolean;
+    @Prop({type: Number, default: 0}) listid: Number;
     userCreatedListItem: UserCreatedListItem = new UserCreatedListItem();
-    testMultiSelectTags = [
-        { name: 'Vue.js', code: 'vu' },
-        { name: 'Javascript', code: 'js' },
-        { name: 'Open Source', code: 'os' }
-        ];
+    pagerequest: PageUserCreatedListItemTagRequest = new PageUserCreatedListItemTagRequest();
+    yeniEklenecekTaglar = [];
+
     get listTypes(){
         return this.$store.state.listType.list;
     }
+    get currentListTags() {
+        let res = _.concat(this.yeniEklenecekTaglar, this.$store.state.userCreatedListItemTag.list);
+        return res;
+    }
 
     userItemTagEkle (newTag) {
-        console.log(newTag);
-      const tag = {
-        name: newTag,
-        code: newTag.substring(0, 2) + Math.floor((Math.random() * 10000000))
-      }
-      this.testMultiSelectTags.push(tag);
+        const tag = {
+            name: newTag,
+            id: newTag.substring(0, 2) + Math.floor((Math.random() * 10000000))
+        }
+
+        this.yeniEklenecekTaglar.push(tag);
     }
 
     save() {
@@ -91,6 +108,27 @@ export default class CreateUserListItem extends AbpBase {
         if (!value) {
             this.$emit("input", value);
         }
+    }
+
+    LoadTagList(){
+        this.$store.dispatch({
+            type: 'userCreatedListItemTag/getAll',
+            data: this.pagerequest
+        })
+    }
+
+    async getpage(){
+        this.pagerequest.maxResultCount = 3;
+        this.LoadTagList();
+    }
+
+    @Watch('listid') reloadTags(newValue, oldValue)
+    { 
+        this.pagerequest.UserCreatedListId = this.listid;
+        this.LoadTagList();
+    }
+    async created() {
+        this.getpage();
     }
     // validatePassCheck = (rule:any, value:any, callback:any) => {
     //     if (!value) {

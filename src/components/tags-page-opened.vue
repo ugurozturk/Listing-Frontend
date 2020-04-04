@@ -1,7 +1,3 @@
-<style lang="less">
-    @import '../views/main.less';
-</style>
-
 <template>
     <div ref="scrollCon" @DOMMouseScroll="handlescroll" @mousewheel="handlescroll" class="tags-outer-scroll-con">
         <div class="close-all-tag-con">

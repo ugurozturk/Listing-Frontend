@@ -78,7 +78,6 @@
     import lockScreen from '../components/lockscreen/lockscreen.vue';
     import notice from '../components/notices/notice.vue';
     import util from '../lib/util';
-    import * as _ from "lodash";
     import copyfooter from '../components/Footer.vue'
     import LanguageList from '../components/language-list.vue'
     import UserListTop from '../components/user-list-top.vue'
