@@ -11,6 +11,7 @@ import listType from './modules/list-type'
 import systemCreatedList from './modules/system-created-list'
 import userCreatedList from './modules/user-created-list'
 import userCreatedListItem from './modules/user-created-list-item'
+import userCreatedListItemTag from './modules/user-created-list-item-tag'
 const store = new Vuex.Store({
     state: {
         //
@@ -31,7 +32,8 @@ const store = new Vuex.Store({
         listType,
         systemCreatedList,
         userCreatedList,
-        userCreatedListItem
+        userCreatedListItem,
+        userCreatedListItemTag
     }
 });
 
