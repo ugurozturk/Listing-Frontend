@@ -32,8 +32,6 @@
                 </div>
             </div>
         </Card>
-        <!-- <create-user-list v-model="createModalShow" @save-success="getpage"></create-user-list>
-        <edit-user-list v-model="editModalShow" @save-success="getpage"></edit-user-list> -->
         <create-user-list-item v-model="createUserListItemShown" :listid="listid"></create-user-list-item>
     </div>
 </template>
