@@ -8,7 +8,7 @@ class SignalRAspNetCoreHelper{
             autoConnect: true,
             connect: undefined,
             hubs: undefined,
-            qs: AppConsts.authorization.encrptedAuthTokenName + "=" + encodeURIComponent(encryptedAuthToken),
+            qs: AppConsts.authorization.encrptedAuthTokenName + '=' + encodeURIComponent(encryptedAuthToken),
             remoteServiceBaseUrl: AppConsts.remoteServiceBaseUrl,
             url: '/signalr'
         };

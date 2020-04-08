@@ -22,6 +22,7 @@
                     </Row>
                     <Row>
                         <Button @click="create" icon="android-add" type="primary" size="large">{{L('Add')}}</Button>
+                        <Button @click="doNothing" icon="android-add" type="primary" size="large">{{L('RemoveAll')}}</Button>
                         <Button icon="ios-search" type="primary" size="large" @click="getpage" class="toolbar-btn">{{L('Find')}}</Button>
                     </Row>
                 </Form>
@@ -78,6 +79,9 @@ export default class UserListView extends AbpBase {
   @Watch('$route') reloadPage(to:any){ this.getpage(); }
   create() {
     this.createUserListItemShown = true;
+  }
+  doNothing(){
+    console.log('Hiç bir şey yapılmadı.');
   }
   isActiveChange(val: string) {
     console.log(val);
