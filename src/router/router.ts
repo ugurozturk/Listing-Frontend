@@ -18,6 +18,7 @@ declare global {
     var System: System
 }
 import login from '../views/login.vue'
+import register from '../views/register.vue'
 import home from '../views/home/home.vue'
 import main from '../views/main.vue'
 
@@ -26,8 +27,16 @@ export const locking = {
     name: 'locking',
     component: () => import('../components/lockscreen/components/locking-page.vue')
 };
+export const registerRouter: Router = {
+    path: '/register',
+    name: 'register',
+    meta: {
+        title: 'Register'
+    },
+    component: () => import('../views/register.vue')
+};
 export const loginRouter: Router = {
-    path: '/',
+    path: '/login',
     name: 'login',
     meta: {
         title: 'LogIn'
@@ -83,6 +92,7 @@ export const appRouters: Array<Router> = [{
 }
 ]
 export const routers = [
+    registerRouter,
     loginRouter,
     locking,
     ...appRouters,

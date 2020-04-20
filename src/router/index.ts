@@ -1,10 +1,10 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import {routers} from './router';
+import { routers } from './router';
 import ViewUI, { LoadingBar } from 'view-design';
 import Util from '../lib/util';
 import Cookies from 'js-cookie'
-import { appRouters,otherRouters} from './router'
+import { appRouters, otherRouters } from './router'
 
 Vue.use(VueRouter);
 
@@ -16,19 +16,19 @@ const RouterConfig = {
 export const router = new VueRouter(RouterConfig);
 
 router.beforeEach((to, from, next) => {
-   LoadingBar.start();
+    LoadingBar.start();
     Util.title(to.meta.title);
     if (Cookies.get('locking') === '1' && to.name !== 'locking') {
         next({
             replace: true,
             name: 'locking'
         });
-    }else if (Cookies.get('locking') === '0' && to.name === 'locking') {
+    } else if (Cookies.get('locking') === '0' && to.name === 'locking') {
         next(false);
     } else {
-        if (!Util.abp.session.userId&& to.name !== 'login') {
+        if (!Util.abp.session.userId && (to.name !== 'login' && to.name !== 'register')) {
             next({
-                name: 'login'
+                name: 'register'
             });
         } else if (!!Util.abp.session.userId && to.name === 'login') {
             Util.title(to.meta.title);

@@ -15,29 +15,26 @@
       <div class="main">
         <div v-if="!!tenant" class="tenant-title"><a @click="showChangeTenant=true">{{L('CurrentTenant')}}:{{tenant.name}}</a></div>
         <div v-if="!tenant" class="tenant-title"><a @click="showChangeTenant=true">{{L('NotSelected')}}</a></div>
-        <Form ref="loginform" :rules="rules" :model="loginModel">
+        <Form ref="registerform" :rules="rules" :model="registerModel">
           <FormItem prop="userNameOrEmailAddress">
             <div class="ivu-input-wrapper ivu-input-wrapper-large ivu-input-type">
               <i class="ivu-icon ivu-icon-ios-person-outline ivu-input-icon ivu-input-icon-normal" style="left:0"></i>
-              <input v-model="loginModel.userNameOrEmailAddress" autocomplete="off" spellcheck="false" type="text" :placeholder="L('UserNamePlaceholder')" class="ivu-input ivu-input-large" style="padding-left:32px;padding-right:0">
+              <input v-model="registerModel.userNameOrEmailAddress" autocomplete="off" spellcheck="false" type="text" :placeholder="L('UserNamePlaceholder')" class="ivu-input ivu-input-large" style="padding-left:32px;padding-right:0">
             </div>
           </FormItem>
           <FormItem prop="password">
             <div class="ivu-input-wrapper ivu-input-wrapper-large ivu-input-type">
               <i class="ivu-icon ivu-icon-ios-locked-outline ivu-input-icon ivu-input-icon-normal" style="left:0"></i>
-              <input v-model="loginModel.password" autocomplete="off" spellcheck="false" type="password" :placeholder="L('PasswordPlaceholder')" class="ivu-input ivu-input-large" style="padding-left:32px;padding-right:0">
+              <input v-model="registerModel.password" autocomplete="off" spellcheck="false" type="password" :placeholder="L('PasswordPlaceholder')" class="ivu-input ivu-input-large" style="padding-left:32px;padding-right:0">
             </div>
           </FormItem>
         </Form>
         <div>
-          <Checkbox v-model="loginModel.rememberMe" size="large">{{L('RememberMe')}}</Checkbox>
-          <a style="float:right;font-size: 14px;margin-top: 3px;">{{L('ForgetPassword')}}</a>
+          <Checkbox v-model="registerModel.rememberMe" size="large">{{L('RememberMe')}}</Checkbox>
+            <a style="float:right;font-size: 14px;margin-top: 3px;" @click="gotoLoginPage">{{L('LogIn')}}</a>
         </div>
         <div style="margin-top:15px">
-          <Row :gutter="16">
-            <Col span="12"><Button type="primary" @click="gotoRegisterPage" long size="large">{{L('Register')}}</Button></Col>
-            <Col span="12"><Button type="primary" @click="login" long size="large">{{L('LogIn')}}</Button></Col>
-          </Row>
+          <Button type="primary" @click="register" long size="large">{{L('Register')}}</Button>
         </div>
         <language-switch></language-switch>
       </div>
@@ -53,35 +50,36 @@ import TenantSwitch from '../components/tenant-switch.vue'
 import LanguageSwitch from '../components/language-switch.vue'
 import ViewUI from 'view-design';
 import AbpBase from '../lib/abpbase'
+import { router } from '../router';
 @Component({
   components:{Footer,TenantSwitch,LanguageSwitch}
 })
-export default class Login extends AbpBase {
-  loginModel={
+export default class Register extends AbpBase {
+  registerModel={
     userNameOrEmailAddress:'',
     password:'',
     rememberMe:false
   }
   showChangeTenant:boolean=false
-  async login(){
-    (this.$refs.loginform as any).validate(async (valid:boolean)=>{
+  async register(){
+    (this.$refs.registerform as any).validate(async (valid:boolean)=>{
        if(valid){
           this.$Message.loading({
-            content:this.L('LoginPrompt'),
+            content:this.L('RegisterPrompt'),
             duration:0
           })
           await this.$store.dispatch({
-            type:'app/login',
-            data:this.loginModel
+            type:'app/register',
+            data:this.registerModel
           })
-          sessionStorage.setItem('rememberMe',this.loginModel.rememberMe?'1':'0');
+          sessionStorage.setItem('rememberMe',this.registerModel.rememberMe?'1':'0');
         location.reload();
        }
     });      
   }
-  async gotoRegisterPage(){
+  async gotoLoginPage() {
     this.$router.push({
-                name: 'register'
+                name: 'login'
             });
   }
   get tenant(){
