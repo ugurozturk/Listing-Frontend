@@ -13,24 +13,39 @@
         </div>
       </div>
       <div class="main">
-        <div v-if="!!tenant" class="tenant-title"><a @click="showChangeTenant=true">{{L('CurrentTenant')}}:{{tenant.name}}</a></div>
-        <div v-if="!tenant" class="tenant-title"><a @click="showChangeTenant=true">{{L('NotSelected')}}</a></div>
         <Form ref="registerform" :rules="rules" :model="registerModel">
-          <FormItem prop="userNameOrEmailAddress">
+          <FormItem prop="name">
             <div class="ivu-input-wrapper ivu-input-wrapper-large ivu-input-type">
               <i class="ivu-icon ivu-icon-ios-person-outline ivu-input-icon ivu-input-icon-normal" style="left:0"></i>
-              <input v-model="registerModel.userNameOrEmailAddress" autocomplete="off" spellcheck="false" type="text" :placeholder="L('UserNamePlaceholder')" class="ivu-input ivu-input-large" style="padding-left:32px;padding-right:0">
+              <input v-model="registerModel.name" autocomplete="off" spellcheck="false" type="text" :placeholder="L('Name')" class="ivu-input ivu-input-large" style="padding-left:32px;padding-right:0">
+            </div>
+          </FormItem>
+          <FormItem prop="surname">
+            <div class="ivu-input-wrapper ivu-input-wrapper-large ivu-input-type">
+              <i class="ivu-icon ivu-icon-ios-person-outline ivu-input-icon ivu-input-icon-normal" style="left:0"></i>
+              <input v-model="registerModel.surname" autocomplete="off" spellcheck="false" type="text" :placeholder="L('Surname')" class="ivu-input ivu-input-large" style="padding-left:32px;padding-right:0">
+            </div>
+          </FormItem>
+          <FormItem prop="userName">
+            <div class="ivu-input-wrapper ivu-input-wrapper-large ivu-input-type">
+              <i class="ivu-icon ivu-icon-ios-person-outline ivu-input-icon ivu-input-icon-normal" style="left:0"></i>
+              <input v-model="registerModel.userName" autocomplete="off" spellcheck="false" type="text" :placeholder="L('UserName')" class="ivu-input ivu-input-large" style="padding-left:32px;padding-right:0">
+            </div>
+          </FormItem>
+          <FormItem prop="emailAddress">
+            <div class="ivu-input-wrapper ivu-input-wrapper-large ivu-input-type">
+              <i class="ivu-icon ivu-icon-ios-person-outline ivu-input-icon ivu-input-icon-normal" style="left:0"></i>
+              <input v-model="registerModel.emailAddress" autocomplete="off" spellcheck="false" type="text" :placeholder="L('Email')" class="ivu-input ivu-input-large" style="padding-left:32px;padding-right:0">
             </div>
           </FormItem>
           <FormItem prop="password">
             <div class="ivu-input-wrapper ivu-input-wrapper-large ivu-input-type">
               <i class="ivu-icon ivu-icon-ios-locked-outline ivu-input-icon ivu-input-icon-normal" style="left:0"></i>
-              <input v-model="registerModel.password" autocomplete="off" spellcheck="false" type="password" :placeholder="L('PasswordPlaceholder')" class="ivu-input ivu-input-large" style="padding-left:32px;padding-right:0">
+              <input v-model="registerModel.password" autocomplete="off" spellcheck="false" type="password" :placeholder="L('Password')" class="ivu-input ivu-input-large" style="padding-left:32px;padding-right:0">
             </div>
           </FormItem>
         </Form>
         <div>
-          <Checkbox v-model="registerModel.rememberMe" size="large">{{L('RememberMe')}}</Checkbox>
             <a style="float:right;font-size: 14px;margin-top: 3px;" @click="gotoLoginPage">{{L('LogIn')}}</a>
         </div>
         <div style="margin-top:15px">
@@ -40,7 +55,7 @@
       </div>
     </div>
     <Footer :copyright="L('CopyRight')"></Footer>
-    <tenant-switch v-model="showChangeTenant"></tenant-switch>
+    <!-- <tenant-switch v-model="showChangeTenant"></tenant-switch> -->
   </div>
 </template>
 <script lang="ts">
@@ -56,9 +71,11 @@ import { router } from '../router';
 })
 export default class Register extends AbpBase {
   registerModel={
-    userNameOrEmailAddress:'',
-    password:'',
-    rememberMe:false
+    name:'',
+    surname:'',
+    userName:'',
+    emailAddress:'',
+    password:''
   }
   showChangeTenant:boolean=false
   async register(){
@@ -66,14 +83,22 @@ export default class Register extends AbpBase {
        if(valid){
           this.$Message.loading({
             content:this.L('RegisterPrompt'),
-            duration:0
           })
           await this.$store.dispatch({
             type:'app/register',
             data:this.registerModel
-          })
-          sessionStorage.setItem('rememberMe',this.registerModel.rememberMe?'1':'0');
-        location.reload();
+          }).then(f => {
+            if(f.canLogin){
+              this.$Message.success({
+                content: this.L('Success'),
+                onClose: () => {
+                  this.$router.push({
+                    name: 'login'
+                  });
+                }
+              })
+            }
+          });
        }
     });      
   }

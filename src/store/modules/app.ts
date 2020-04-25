@@ -199,6 +199,10 @@ class AppModule implements Module<AppState, any>{
             Util.abp.auth.setToken(rep.data.result.accessToken, tokenExpireDate);
             Util.abp.utils.setCookieValue(appconst.authorization.encrptedAuthTokenName, rep.data.result.encryptedAccessToken, tokenExpireDate, Util.abp.appPath)
         },
+        async register(content: ActionContext<AppState, any>, payload: any) {
+            let rep = await ajax.post('/api/services/app/Account/Register', payload.data);
+            return rep.data.result;
+        },
     }
 }
 const appModule = new AppModule();
