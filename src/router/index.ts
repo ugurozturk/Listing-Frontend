@@ -30,7 +30,7 @@ router.beforeEach((to, from, next) => {
             next({
                 name: 'register'
             });
-        } else if (!!Util.abp.session.userId && to.name === 'login') {
+        } else if (!!Util.abp.session.userId && (to.name === 'login' || to.name == null)) {
             Util.title(to.meta.title);
             next({
                 name: 'home'
