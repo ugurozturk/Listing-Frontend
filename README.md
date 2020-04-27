@@ -1,3 +1,5 @@
+![Node.js CI](https://github.com/ugurozturk/Listing-Frontend/workflows/Node.js%20CI/badge.svg)
+
 # ASP.NET Boilerplate VueJS Template
 
 The Vue.js integration for ABP Boilerplate framework. This template is built on Vue+iview+Typescript.
