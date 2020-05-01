@@ -6,7 +6,8 @@ import UserCreatedListItemTag from './user-created-list-item-tag';
 export default class UserCreatedListItem extends Entity<number>{
     name:string;
     score:number;
+    userCreatedListId:number;
     userCreatedList:UserCreatedList;
     systemCreatedListItem:SystemCreatedListItem;
-    userCreatedListItemTags = [] ;
+    userCreatedListItemTags = [];
 }

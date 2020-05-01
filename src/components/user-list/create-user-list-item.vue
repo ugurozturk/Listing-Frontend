@@ -63,7 +63,7 @@ class CreateUserCreatedListItemTag {
 @Component
 export default class CreateUserListItem extends AbpBase {
     @Prop({ type: Boolean, default: false }) value: boolean;
-    @Prop({type: Number, default: 0}) listid: Number;
+    @Prop({type: Number, default: 0}) listid: number;
     userCreatedListItem: UserCreatedListItem = new UserCreatedListItem();
     pagerequest: PageUserCreatedListItemTagRequest = new PageUserCreatedListItemTagRequest();
     yeniEklenecekTaglar = [];
@@ -72,7 +72,7 @@ export default class CreateUserListItem extends AbpBase {
         return this.$store.state.listType.list;
     }
     get currentListTags() {
-        let res = _.concat(this.yeniEklenecekTaglar, this.$store.state.userCreatedListItemTag.list);
+        let res = _.uniqBy(_.concat(this.yeniEklenecekTaglar, _.xor(this.yeniEklenecekTaglar, this.$store.state.userCreatedListItemTag.list)), 'name');
         return res;
     }
 
@@ -86,11 +86,13 @@ export default class CreateUserListItem extends AbpBase {
     }
 
     save() {
+        this.userCreatedListItem.userCreatedListId = this.listid;
+
         (this.$refs.userCreatedListItemForm as any).validate(
             async (valid: boolean) => {
                 if (valid) {
                     await this.$store.dispatch({
-                        type: "userCreatedListItem/create",
+                        type: "userCreatedListItem/createWithTags",
                         data: this.userCreatedListItem
                     });
                     (this.$refs.userCreatedListItemForm as any).resetFields();

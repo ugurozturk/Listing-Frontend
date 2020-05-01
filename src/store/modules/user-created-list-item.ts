@@ -33,6 +33,9 @@ class UserCreatedListItemModule extends ListModule<UserCreatedListItemState, any
         async create(context: ActionContext<UserCreatedListItemState, any>, payload: any) {
             await Ajax.post('/api/services/app/UserCreatedListItem/Create', payload.data);
         },
+        async createWithTags(context: ActionContext<UserCreatedListItemState, any>, payload: any) {
+            await Ajax.post('/api/services/app/UserCreatedListItem/CreateWithTags', payload.data);
+        },
         async update(context: ActionContext<UserCreatedListItemState, any>, payload: any) {
             //TODO:UĞUR url düzenle
             await Ajax.put('/api/services/app/UserCreatedListItem/Update', payload.data);

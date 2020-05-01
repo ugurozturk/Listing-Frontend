@@ -134,7 +134,7 @@ export default class UserListView extends AbpBase {
     title: this.L('SystemCreatedListItem'),
     key: 'systemCreatedListItem',
     render: (h: any, params: any) => {
-      return h('span', params.row.systemCreatedListItem.name);
+      return h('span', params.row.systemCreatedListItem?.name);
     }
   }, {
     title: this.L('UserCreatedListType'),
@@ -196,7 +196,7 @@ export default class UserListView extends AbpBase {
                 cancelText: this.L('No'),
                 onOk: async () => {
                   await this.$store.dispatch({
-                    type: 'userCreatedList/delete',
+                    type: 'userCreatedListItem/delete',
                     data: params.row
                   })
                   await this.getpage();

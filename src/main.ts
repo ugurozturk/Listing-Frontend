@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import App from './app.vue';
 import ViewUI from 'view-design';
+import locale from 'view-design/dist/locale/tr-TR';
 import 'view-design/dist/styles/iview.css';
 import {router} from './router/index';
 import 'famfamfam-flags/dist/sprite/famfamfam-flags.css';
@@ -8,7 +9,7 @@ import './theme.less';
 import Ajax from './lib/ajax';
 import Util from './lib/util';
 import SignalRAspNetCoreHelper from './lib/SignalRAspNetCoreHelper';
-Vue.use(ViewUI);
+Vue.use(ViewUI, {locale:locale});
 import store from './store/index';
 Vue.config.productionTip = false;
 import { appRouters,otherRouters} from './router/router';
