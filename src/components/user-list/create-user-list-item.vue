@@ -96,7 +96,7 @@ export default class CreateUserListItem extends AbpBase {
                         data: this.userCreatedListItem
                     });
                     (this.$refs.userCreatedListItemForm as any).resetFields();
-                    this.$emit("save-success");
+                    this.$emit("updated");
                     this.$emit("input", false);
                 }
             }

@@ -32,7 +32,7 @@
                 </div>
             </div>
         </Card>
-        <create-user-list-item v-model="createUserListItemShown" :listid="listid"></create-user-list-item>
+        <create-user-list-item v-model="createUserListItemShown" :listid="listid" v-on:updated="getpage"></create-user-list-item>
     </div>
 </template>
 
