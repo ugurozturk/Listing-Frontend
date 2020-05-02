@@ -130,7 +130,11 @@ export default class UserListView extends AbpBase {
   }, {
     title: this.L('Name'),
     key: 'name'
-  }, {
+  },{
+    title: this.L('Score'),
+    key: 'score'
+  },
+   {
     title: this.L('SystemCreatedListItem'),
     key: 'systemCreatedListItem',
     render: (h: any, params: any) => {
